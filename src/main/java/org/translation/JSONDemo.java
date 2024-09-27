@@ -13,13 +13,14 @@ public class JSONDemo {
      * @param args not used
      */
     public static void main(String[] args) {
-        String jsonData = "[{\"key1\" : \"string1a\", \"key2\":21}, {\"key1\" : \"string1b\", \"key2\":22}]";
+        String jsonData = "[{\"key1\" : \"string1a\", \"key2\":21}, {\"key1\" : \"string1b\", \"key2\" : \"22\"}, {\"key1\" : \"string1c\", \"key2\":23}]";
+        // read information into string, use string to initialize  new json object
         JSONArray jsonArray = new JSONArray(jsonData);
         System.out.println(jsonArray);
         System.out.println(jsonArray.length());
         // note that we can use jsonArray.get, but its return type is just Object,
         // which isn't as useful as below.
-        JSONObject jsonObject = jsonArray.getJSONObject(0);
+        JSONObject jsonObject = jsonArray.getJSONObject(2);
         System.out.println(jsonObject);
         System.out.println(jsonObject.getString("key1"));
         System.out.println(jsonObject.getInt("key2"));
@@ -34,7 +35,7 @@ public class JSONDemo {
      */
     public static String getKeyOneOfSecond(JSONArray jsonArray) {
         // TODO: Complete this method.
-        return "";
+        JSONObject jsonObject = jsonArray.getJSONObject(1);
+        return jsonObject.getString("key1");
     }
-
 }

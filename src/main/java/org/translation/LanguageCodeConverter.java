@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This class provides the service of converting language codes to their names.
@@ -14,11 +12,13 @@ import java.util.Map;
 public class LanguageCodeConverter {
 
     // TODO Task: pick appropriate instance variables to store the data necessary for this class
-
+    private Map<String, String> codetonames = new HashMap<>();
+    private Map<String, String> nametocode = new HashMap<>();
     /**
      * Default constructor which will load the language codes from "language-codes.txt"
      * in the resources folder.
      */
+
     public LanguageCodeConverter() {
         this("language-codes.txt");
     }
@@ -36,12 +36,23 @@ public class LanguageCodeConverter {
 
             // TODO Task: use lines to populate the instance variable
             //           tip: you might find it convenient to create an iterator using lines.iterator()
-
-        // TODO Checkstyle: '}' on next line should be alone on a line.
-        } catch (IOException | URISyntaxException ex) {
+//            Iterator<String> line = lines.iterator();
+//            while (line.hasNext()) {
+//                String[] lannameandcode = line.next().split("\t");
+//                String key = lannameandcode[1];
+//                String value = lannameandcode[0];
+//                codetonames.put(key, value);
+//                line.next();
+//            }
+            for (String line : lines) {
+                String[] parts = line.split("\\t");
+                codetonames.put(parts[1], parts[0]);
+                nametocode.put(parts[0], parts[1]);
+            }
+        }
+        catch (IOException | URISyntaxException ex) {
             throw new RuntimeException(ex);
         }
-
     }
 
     /**
@@ -51,7 +62,7 @@ public class LanguageCodeConverter {
      */
     public String fromLanguageCode(String code) {
         // TODO Task: update this code to use your instance variable to return the correct value
-        return code;
+        return codetonames.get(code);
     }
 
     /**
@@ -61,7 +72,7 @@ public class LanguageCodeConverter {
      */
     public String fromLanguage(String language) {
         // TODO Task: update this code to use your instance variable to return the correct value
-        return language;
+        return nametocode.get(language);
     }
 
     /**
@@ -70,6 +81,6 @@ public class LanguageCodeConverter {
      */
     public int getNumLanguages() {
         // TODO Task: update this code to use your instance variable to return the correct value
-        return 0;
+        return codetonames.size() - 1;
     }
 }

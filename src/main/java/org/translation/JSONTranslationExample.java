@@ -35,10 +35,9 @@ public class JSONTranslationExample {
      * Returns the Spanish translation of Canada.
      * @return the Spanish translation of Canada
      */
-    public String getCanadaCountryNameSpanishTranslation() {
 
-        // TODO Checkstyle: '30' is a magic number.
-        JSONObject canada = jsonArray.getJSONObject(30);
+    public String getCanadaCountryNameSpanishTranslation() {
+        JSONObject canada = jsonArray.getJSONObject(CANADA_INDEX);
         return canada.getString("es");
     }
 
@@ -52,13 +51,23 @@ public class JSONTranslationExample {
      * @return the translation of country to the given language or "Country not found" if there is no translation.
      */
     public String getCountryNameTranslation(String countryCode, String languageCode) {
-        return "Country not found";
+
+        int id = 0;
+        for (int i = 0; i < jsonArray.length(); i++) {
+            if (jsonArray.getJSONObject(i).getString("alpha3").equals(countryCode)) {
+                id = i;
+                break;
+            }
+        }
+        JSONObject canada = jsonArray.getJSONObject(id);
+        return canada.getString(languageCode);
     }
 
     /**
      * Prints the Spanish translation of Canada.
      * @param args not used
      */
+
     public static void main(String[] args) {
         JSONTranslationExample jsonTranslationExample = new JSONTranslationExample();
 
